@@ -68,7 +68,7 @@ python airflow_states_collector.py \
 ```
 
 ### Airflow 2
-Below example also skips 2 dags for metrics collection: airflow monitoring and current dag.   
+Below example also skips 2 dags for states collection: airflow monitoring and current dag.   
 Same flags can be used in Airflow1 example above as well. 
 ```
 python airflow_states_collector.py \
@@ -76,8 +76,8 @@ python airflow_states_collector.py \
    --airflow-version=2 \
    --dags-gcs-folder=gs://us-central1-test-278acd57-bucket/dags \
    --ndays-history=5 \
-   --airflow-dagid=airflow-metrics-collector \
-   --skip-dagids='airflow-monitoring,airflow-metrics-collector'
+   --airflow-dagid=airflow-states-collector \
+   --skip-dagids='airflow-monitoring,airflow-states-collector'
    
 ```
 

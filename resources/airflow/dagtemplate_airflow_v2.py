@@ -105,6 +105,7 @@ def metrics_collect_and_store_to_bq(**kwargs):
       # DagRun.execution_date < end_time_filter,
       and_(
           or_(and_(TaskInstance.start_date >= start_time_filter, TaskInstance.start_date < end_time_filter),
+              and_(TaskInstance.updated_at >= start_time_filter, TaskInstance.updated_at < end_time_filter),
               and_(TaskInstance.end_date >= start_time_filter, TaskInstance.end_date < end_time_filter)),
           DagRun.dag_id == TaskInstance.dag_id,
           DagRun.run_id == TaskInstance.run_id,
