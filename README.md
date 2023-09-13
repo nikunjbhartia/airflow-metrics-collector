@@ -9,7 +9,7 @@ State Information Captured by the tool:
 - DagRuns: DagId, runId, run_start_ts, run_end_ts
 - TaskInstance: Id, job_id, operator, start_ts, end_ts, updated_ts
 
-# Architecture
+## Architecture  
 ![plot](resources/readme/images/architecture.png?raw=true)
 
 ## Install Dependencies
@@ -114,7 +114,7 @@ python airflow_states_collector.py \
    
 ```
 
-## Sample Dashboard
+## Sample Dashboard  
 ![plot](resources/readme/images/dashboard_ss1.png?raw=true)
 ![plot](resources/readme/images/dashboard_ss2.png?raw=true)
 ![plot](resources/readme/images/dashboard_ss3.png?raw=true)
