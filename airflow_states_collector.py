@@ -28,16 +28,6 @@ from texttable import Texttable
 
 warnings.filterwarnings("ignore")
 
-#TODO
-# Add updated_at task level field (change dashboards accordingly)
-# In main DDL, rename tasks to tasks_updated, to make ti clear that it only contains updated tasks
-# Add updated_at tasks in View as well
-# Add description in every function
-# Add tests
-# README
-# Error Handling
-# Asset
-
 LOGGER = get_logger('airflow-states-client')
 
 def create_bigquery_resources(args):
@@ -55,7 +45,8 @@ def create_bigquery_resources(args):
       'PROJECT': args.bq_storage_project_id,
       'DATASET': args.bq_storage_dataset,
       'TABLE_NAME': args.bq_table_name,
-      'VIEW_NAME': args.bq_view_name
+      'VIEW_NAME': args.bq_view_name,
+      'EXPIRY_DAYS': args.bq_partition_expiry_days
   }
   bq.run_queries([f"resources{os.sep}bigquery{os.sep}airflow_states_ddls.sql"],**replacements)
   return replacements
@@ -171,6 +162,7 @@ if __name__ == "__main__":
   parser.add_argument('--bq-storage-dataset', default="airflow", help="(Optional) BigQuery Dataset for storing airflow States tables. Defaults to 'airflow'")
   parser.add_argument('--bq-dataset-location', default="US", help="(Optional) BigQuery Dataset Location. Ideal if its in the same location as airflow. Defaults to 'US'")
   parser.add_argument('--bq-table-name', default="airflow_states", help="(Optional) BigQuery Airflow states Table Name. Defaults to 'airflow_states'")
+  parser.add_argument('--bq-partition-expiry-days', default=30, help="(Optional) Number of latest partitions to keep in the Airflow States table. Default to 30 days")
   parser.add_argument('--bq-view-name', default="airflow_latest_states_view", help="(Optional) BigQuery Airflow states View Name which contains latest record for every dagrun's task. Defaults to 'airflow_latest_states_view'")
   parser.add_argument('--airflow-dag-filename', default="dag_airflow_states_collector.py", help="(Optional) Airflow dag file name to be stored in GCS. Defaults to 'dag_airflow_states_collector.py'")
   parser.add_argument('--airflow-dagid', default="airflow_states_collector", help="(Optional) Airflow dag ID. Defaults to 'airflow_states_collector'")
@@ -178,6 +170,7 @@ if __name__ == "__main__":
   parser.add_argument('--skip-dagids', default='airflow_monitoring', type=str, help="(Optional) Airflow DagIds (comma-seperated) to be skipped for states collection. Defaults to 'airflow_monitoring'")
   parser.add_argument('--report-name', default="Airflow States Dashboard", help="(Optional) LookerStudio dashboard name that will be created. Defaults to 'Airflow States Dashboard'")
   parser.add_argument('--bq-insert-batch-size', default=150, help="(Optional) Number of records in single BQ Insert Query. Defaults to 150. Decrease this value if you observe BQ Query max length failures")
+
 
   args = parser.parse_args()
   LOGGER.info(f"All Input Argument values: {vars(args)}")

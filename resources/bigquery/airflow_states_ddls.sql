@@ -9,7 +9,10 @@ CREATE OR REPLACE TABLE `{{ PROJECT }}.{{ DATASET }}.{{ TABLE_NAME }}` (
   created_at TIMESTAMP
 )
 PARTITION BY DATE(run_start_ts)
-CLUSTER BY dag_id, run_id;
+CLUSTER BY dag_id, run_id
+OPTIONS(
+    partition_expiration_days={{ EXPIRY_DAYS }}
+);
 
 
 CREATE OR REPLACE VIEW `{{ PROJECT }}.{{ DATASET }}.{{ VIEW_NAME }}` AS

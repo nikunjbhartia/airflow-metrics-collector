@@ -81,8 +81,8 @@ def metrics_collect_and_store_to_bq(**context):
 
     curr_start_time_obj = current_ti.start_date
     curr_start_time = pendulum.parse(str(curr_start_time_obj)) if curr_start_time_obj else pendulum.now()
-    print(f"Previous Success TI Start Date: {prev_success_start_time}")
-    print(f"Current TI Start Date: {current_ti.start_date}")
+    # print(f"Previous Success TI Start Date: {prev_success_start_time}")
+    # print(f"Current TI Start Date: {current_ti.start_date}")
   else:
     prev_success_start_time = pendulum.now().subtract(days=LAST_NDAYS)
     curr_start_time = pendulum.now()
@@ -138,7 +138,7 @@ def metrics_collect_and_store_to_bq(**context):
     index = index + 1
     print(f"Executing Batch: {index}")
     print(f"query batch size: {len(query_results_batch)}")
-    print(f"query batch result: {query_results_batch}")
+    # print(f"query batch result: {query_results_batch}")
 
     insert_sql_prefix = f"INSERT INTO `{BQ_PROJECT}.{BQ_AUDIT_DATASET}.{BQ_AUDIT_TABLE}` VALUES "
     insert_values = []
@@ -173,7 +173,7 @@ def metrics_collect_and_store_to_bq(**context):
           "useLegacySql": False
         }
     }
-    print(f"Executing BQ Query : {insert_sql}")
+    # print(f"Executing BQ Query : {insert_sql}")
     BigQueryHook().insert_job(configuration=job_config)
 
   return True
