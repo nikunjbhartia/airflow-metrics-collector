@@ -41,7 +41,7 @@ from sqlalchemy import (
 # run_state STRING,
 # run_start_ts TIMESTAMP,
 # run_end_ts TIMESTAMP,
-# tasks ARRAY<STRUCT<id STRING, job_id STRING, operator STRING, state STRING, start_ts TIMESTAMP, end_ts TIMESTAMP>>,
+# updated_tasks ARRAY<STRUCT<id STRING, job_id STRING, operator STRING, state STRING, start_ts TIMESTAMP, end_ts TIMESTAMP, updated_ts TIMESTAMP>>,
 # created_at TIMESTAMP
 # );
 
@@ -99,7 +99,9 @@ def metrics_collect_and_store_to_bq(**kwargs):
               "start_date",
               TaskInstance.start_date,
               "end_date",
-              TaskInstance.end_date)).label("tasks")) \
+              TaskInstance.end_date,
+              "updated_date",
+              TaskInstance.updated_at)).label("tasks")) \
     .filter(
       # DagRun.execution_date >= start_time_filter,
       # DagRun.execution_date < end_time_filter,
@@ -137,7 +139,8 @@ def metrics_collect_and_store_to_bq(**kwargs):
                      f'"{task.get("operator")}" as operator, ' \
                      f'"{task.get("state")}" as state, ' \
                      f'SAFE_CAST("{task.get("start_date")}" AS TIMESTAMP) as start_ts, ' \
-                     f'SAFE_CAST("{task.get("end_date")}" AS TIMESTAMP) as end_ts) '
+                     f'SAFE_CAST("{task.get("end_date")}" AS TIMESTAMP) as end_ts, ' \
+                     f'SAFE_CAST("{task.get("updated_date")}" AS TIMESTAMP) as updated_ts)'
         task_values.append(task_value)
 
       # End of inner for loop

@@ -150,7 +150,8 @@ def metrics_collect_and_store_to_bq(**context):
                      f'"{task.get("operator")}" as operator, ' \
                      f'"{task.get("state")}" as state, ' \
                      f'SAFE_CAST("{task.get("start_date")}" AS TIMESTAMP) as start_ts, ' \
-                     f'SAFE_CAST("{task.get("end_date")}" AS TIMESTAMP) as end_ts) '
+                     f'SAFE_CAST("{task.get("end_date")}" AS TIMESTAMP) as end_ts, ' \
+                     f'SAFE_CAST("{task.get("updated_date")}" AS TIMESTAMP) as updated_ts)'
         task_values.append(task_value)
 
       # End of inner for loop

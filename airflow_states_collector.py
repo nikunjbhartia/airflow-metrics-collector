@@ -29,14 +29,14 @@ from texttable import Texttable
 warnings.filterwarnings("ignore")
 
 #TODO
-# Change repo name to "Airflow States Collector"
-# Test on airflow 1 and airflow2
+# Add updated_at task level field (change dashboards accordingly)
+# In main DDL, rename tasks to tasks_updated, to make ti clear that it only contains updated tasks
+# Add updated_at tasks in View as well
 # Add description in every function
 # Add tests
 # README
 # Error Handling
 # Asset
-# Add log level in all loggers and add more debug logs
 
 LOGGER = get_logger('airflow-states-client')
 
