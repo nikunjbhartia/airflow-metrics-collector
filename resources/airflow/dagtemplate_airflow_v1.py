@@ -72,6 +72,7 @@ def metrics_collect_and_store_to_bq(**context):
   current_ti = context.get("task_instance")
 
   if current_ti:
+    #https://airflow.apache.org/docs/apache-airflow/1.10.15/_api/airflow/models/taskinstance/index.html
     prev_success_start_time_obj = current_ti.previous_start_date_success
     if prev_success_start_time_obj:
       prev_success_start_time = pendulum.parse(str(prev_success_start_time_obj))
@@ -125,7 +126,6 @@ def metrics_collect_and_store_to_bq(**context):
     .group_by(DagRun.dag_id, DagRun.run_id, DagRun.state)
 
   query_results = query.all()
-  print(f"Query : \n{str(query)}")
   print(f"Query : \n{query.statement.compile(compile_kwargs={'literal_binds': True})}")
   print(f"Query Results Count = {len(query_results)}")
 

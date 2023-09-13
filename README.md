@@ -1,4 +1,4 @@
-# Airflow Metrics Collector 
+# Airflow States Collector 
 
 Python Version : 3.9   
 **This tool aggregates dag run task states and runtime, stores the data into BigQuery and creates a LookerStudio dashboard on top of the data.   
@@ -38,7 +38,7 @@ Now the environment is ready !
 
 ## Usage 
 ```
-airflow_metrics_collector.py [-h] \
+airflow_states_collector.py [-h] \
    --bq-storage-project-id BQ_STORAGE_PROJECT_ID \
    --dags-gcs-folder DAGS_GCS_FOLDER \
    --ndays-history NDAYS_HISTORY \
@@ -58,7 +58,7 @@ airflow_metrics_collector.py [-h] \
 Example: 
 ### Airflow 1 
 ```
-python airflow_metrics_collector.py \
+python airflow_states_collector.py \
    --bq-storage-project-id=nikunjbhartia-test-clients \
    --airflow-version=1 \
    --dags-gcs-folder=gs://us-central1-test-278acd57-bucket/dags \
@@ -71,7 +71,7 @@ python airflow_metrics_collector.py \
 Below example also skips 2 dags for metrics collection: airflow monitoring and current dag.   
 Same flags can be used in Airflow1 example above as well. 
 ```
-python airflow_metrics_collector.py \
+python airflow_states_collector.py \
    --bq-storage-project-id=nikunjbhartia-test-clients \
    --airflow-version=2 \
    --dags-gcs-folder=gs://us-central1-test-278acd57-bucket/dags \
